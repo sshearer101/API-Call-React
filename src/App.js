@@ -4,17 +4,24 @@ import Axios from 'axios'
 
 function App() {
 
-  function getJoke(){
-    Axios.get('http://localhost:3005/jokes/random').then(
-      (response) => {
-        console.log(response)
-      }
-    )
-  }
+const [joke, setJoke] = useState('')
 
+  function getJoke(){
+    // Axios.get('http://localhost:3005/jokes/random').then(
+    //   (response) => {
+    //     setJoke(response.data.setup + "..." + response.data.punchline)
+    //   }
+    // )
+    fetch('http://localhost:3005/jokes/random')
+    .then((response) => response.json())
+      .then((data) => {
+      setJoke(data.setup + "..." + data.punchline)
+    })
+  }
   return (
     <div className="App">
       <button onClick={getJoke}>Render Joke</button>
+      {joke}
     </div>
   );
 }
